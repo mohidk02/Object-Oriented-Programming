@@ -1,0 +1,301 @@
+#include<iostream>
+#include<string>
+using namespace std;
+
+class dateType
+{
+private:
+	int day,month,year;
+	string mon;
+	int months;
+public:
+	dateType(int =1,int =1,int =2000);
+	void setdate(int,int,int);
+	void setday(int);
+	void setmonth(int);
+	void setyear(int);
+	string getmonth();
+	void display();
+	void Incrementyear();
+	void Incrementmonth();
+	void Incrementday();
+	void Incrementbyday(int);
+	void Incrementbymonth(int);
+	void Incrementbyyear(int);
+	void equal(dateType);
+};
+int main()
+{
+	dateType D;
+	dateType C;
+	int d,y,m;
+	
+	cout<<"\nEnter date(dd) : ";
+	cin>>d;
+    cout<<"\nEnter month(mm):";
+    cin>>m;
+    cout<<"\nEnter year(yyyy):";
+    cin>>y;
+	cout<<endl;
+	D.setdate(d,m,y);
+	D.display();
+	cout<<endl;
+	cout<<"********************"<<endl;
+	d=31,
+	m=9;
+	y=1995;
+	cout<<"Set date:"<<d<<"-"<<m<<"-"<<y<<endl;
+	D.setdate(d,m,y);
+	cout<<endl;
+	D.display();
+	cout<<endl;
+	cout<<"********************"<<endl;
+	
+	d=28,	m=2, y=1998;
+	cout<<"Set date:"<<d<<"-"<<m<<"-"<<y<<endl;
+	D.setdate(28,2,1998);
+	D.display();
+	cout<<endl;
+	cout<<"********************"<<endl;
+	
+	cout<<"AFTER INCREMENTING BY 1 DAY"<<endl;
+	D.Incrementday();
+	D.display();
+	cout<<endl;
+	cout<<"********************"<<endl;
+
+	cout<<"If "<<endl;
+	D.setdate(30,11,2007);
+	D.display();
+	cout<<endl;
+	cout<<"AFTER INCREMENTING BY 1 MONTH"<<endl;
+	D.Incrementmonth();
+	D.display();
+	cout<<endl;
+	cout<<"********************"<<endl;
+	cout<<"AFTER INCREMENTING BY 1 YEAR"<<endl;
+	D.Incrementyear();
+	D.display();
+	cout<<endl;
+	cout<<"********************"<<endl;
+	
+	C.setdate(12,3,1999);
+	cout<<"New object created:"<<endl; 
+	cout<<"\nDATE1:"<<endl;
+	C.display();
+	cout<<"\nDATE2:"<<endl;
+	D.display();
+	cout<<endl;
+	D.equal(C);
+
+	cout<<"********************************"<<endl;
+	cout<<"If ";
+	D.display();
+	cout<<endl;
+	cout<<"Date after 9 days will be"<<endl;
+	D.Incrementbyday(9);
+	D.display();
+    cout<<endl;
+    return 0;
+}
+
+
+void dateType::setday(int d)
+{
+	int a[13]={0,31,28,31,30,31,30,31,31,30,31,30,31};
+	if(d<=a[month])
+	{
+		day=d;
+	}
+	else if((year%4==0)&&(year%400==0)&&(year%100!=0)&&(d==29))
+	{
+		day=d;
+	}
+	else
+	{
+		cout<<"\n\tInvalid Day";
+	}
+}
+
+void dateType::setmonth(int m)
+{
+	if((m>0)&&(m<=12))
+	{
+		month=m;
+	}
+	else
+	{
+		cout<<"\n\tInvalid Month";
+	}
+}
+
+void dateType::setyear(int y)
+{
+	if((y/1000!=0)&&(y/10000<=0))
+	{
+		year = y;
+	}
+	else
+	{
+		cout<<"\n\tInvalid Year";
+	}
+}
+
+void dateType::setdate(int d,int m,int y)
+{
+	setyear(y);
+	setmonth(m);
+	setday(d);
+}
+
+dateType::dateType(int d,int m,int y)
+{
+	dateType::setdate(d,m,y);
+}
+
+string dateType::getmonth()
+{
+	string x;
+	switch(month)
+	{
+	case 1:
+		x="Jan";
+		break;
+	case 2:
+		x="Feb";
+		break;
+	case 3:
+		x="Mar";
+		break;
+	case 4:
+		x="Apr";
+		break;
+	case 5:
+		x="May";
+		break;
+	case 6:
+		x="Jun";
+		break;
+	case 7:
+		x="Jul";
+		break;
+	case 8:
+		x="Aug";
+		break;
+	case 9:
+		x="Sep";
+		break;
+	case 10:
+		x="Oct";
+		break;
+	case 11:
+		x="Nov";
+		break;
+	case 12:
+		x="Dec";
+		break;
+	}
+	return x;
+}
+
+void dateType::display()
+{
+	string x = getmonth();
+	if(day>9)
+		cout<<day<<"-"<<x<<"-"<<year;
+	else
+		cout<<0<<day<<"-"<<x<<"-"<<year;
+}
+
+void dateType::Incrementyear()
+{
+	year++;
+}
+void dateType::Incrementmonth()
+{
+	month++;
+	if(month>12)
+	{
+		month--;
+		year++;
+	}
+}
+
+void dateType::Incrementday()
+{
+	day++;
+	if(day>28)
+	{
+		if((month==1)||(month==3)||(month==5)||(month==7)||(month==8)||(month==10)||(month==12))
+		{
+			if(day>31)
+			{
+				day=day-31;
+				month++;
+				if(month>12)
+				{
+					month=month-12;
+					year++;
+				}
+			}
+		}
+		else if((month==4)||(month==6)||(month==9)||(month==11))
+		{
+			if(day>30)
+			{
+				day=day-30;
+				month++;
+			}
+		}
+		else if((year%4==0)&&(year%400==0)&&(year%100!=0))
+		{
+			if(day>29)
+			{
+				day=day-29;
+				month++;
+			}
+		}
+		else 
+		{
+			if(day>28)
+			{
+				day=day-28;
+				month++;
+			}
+		}
+	}
+}
+
+void dateType::Incrementbyday(int s)
+{
+	for(int i=0;i<s;i++)
+	{
+		dateType::Incrementday();
+	}
+}
+
+
+void dateType::Incrementbymonth(int s)
+{
+	for(int i=0;i<s;i++)
+	{
+		dateType::Incrementmonth();
+	}
+}
+
+
+void dateType::Incrementbyyear(int s)
+{
+	for(int i=0;i<s;i++)
+	{
+		dateType::Incrementyear();
+	}
+}
+
+void dateType::equal(dateType x)
+{
+	if((day==x.day)&&(month==x.month)&&(year==x.year))
+		cout<<"\n\tBoth are Equal";
+	else
+		cout<<"\n\tThey are not Equal";
+}
