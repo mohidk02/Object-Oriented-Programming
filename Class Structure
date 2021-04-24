@@ -1,0 +1,97 @@
+#include<iostream>
+using namespace std;
+
+class Rational 
+{
+private:
+	int num;
+	int den;
+public:
+	Rational(int = 1, int = 1);
+	void setValue(int, int);
+	void redValue();
+	void Add(int, int);
+	void Multiply(int, int);
+	void Divide(int, int);
+	void Display();
+};
+
+int main()
+{
+	Rational a;
+	cout << "\n\tDefault Value : ";
+	a.Display();
+	a.setValue(2, 4);
+	cout << "\n\tSet Value To (2/4) : ";
+	a.Display();
+	a.Add(1, 4);
+	cout << "\n\tAdd (1/4) : ";
+	a.Display();
+	a.Multiply(4, 6);
+	cout << "\n\tMultiply (4/6) : ";
+	a.Display();
+	a.Divide(3, 7);
+	cout << "\n\tDivide (3/7) : ";
+	a.Display();
+	cout << "\n\n";
+    return 0;
+
+}
+
+Rational::Rational(int a, int b)
+{
+	setValue(a, b);
+}
+
+void Rational::setValue(int a,int b)
+{
+	if (a != 0)
+		num = a;
+	if (b != 0)
+		den = b;
+	if((a!=1)||(b!=1))
+		redValue();
+}
+
+void Rational::redValue()
+{
+	for (int i = 10; i > 1; i--)
+	{
+		if ((num % i == 0) && (den % i == 0))
+		{
+			while ((num % i == 0)&&(den % i == 0))
+			{
+				num = num / i;
+				den = den / i;
+			}
+		}
+	}
+
+	
+}
+
+void Rational::Add(int a,int b)
+{
+	num=((num * b) + (a * den));
+	den=(den * b);
+	redValue();
+}
+
+void Rational::Multiply(int a, int b)
+{
+	num = (num * a);
+	den = (den * b);
+	redValue();
+}
+
+void Rational::Divide(int a, int b)
+{
+	num = (num * b);
+	den = (den * a);
+	redValue();
+}
+
+void Rational::Display()
+{
+	cout << "\n\t" << num << "/" << den;
+}
