@@ -1,0 +1,350 @@
+#include<iostream>
+using namespace std;
+
+class Rational
+{
+	friend ostream& operator<<(ostream &, Rational &);
+	friend istream& operator>>(istream &, Rational &);
+private:
+	int numerator;
+	int denominator;
+public:
+	Rational();
+	Rational(int,int);
+	~Rational();
+	int getnumerator() const;
+	int getdenominator() const;
+	Rational Reduce();
+	Rational operator+ (Rational &) const;
+	Rational operator- (Rational &) const;
+	Rational operator* (Rational &) const;
+	Rational operator/ (Rational &) const;
+	void Print();
+	Rational operator=(const Rational&);
+	bool operator==(const Rational &)const;
+	bool operator!=(const Rational &)const;
+	bool operator<(const Rational &)const;
+	bool operator<=(const Rational &)const;
+	bool operator>=(const Rational &)const;
+	bool operator>(const Rational &)const;
+	Rational operator++();
+	Rational operator--();
+	Rational operator++(int);
+	Rational operator--(int);
+};
+Rational::Rational()
+{
+	numerator = 1;
+	denominator = 1;
+}
+Rational::Rational(int n, int d)
+{
+	numerator = n;
+	denominator = d;
+}
+Rational::~Rational()
+{
+}
+int Rational::getnumerator() const
+{
+	return numerator;
+}
+int Rational::getdenominator() const
+{
+	return denominator;
+}
+Rational Rational::operator+(Rational &F2) const
+{
+	Rational s;
+	s.numerator = ((numerator*F2.denominator) + (denominator*F2.numerator));
+	s.denominator = denominator*(F2.denominator);
+	return s;
+}
+Rational Rational::operator- (Rational &F2) const
+{
+	Rational s;
+	s.numerator = ((numerator*F2.denominator) - (denominator*F2.numerator));
+	s.denominator = denominator*(F2.denominator);
+	return s;
+}
+Rational Rational:: operator* (Rational &F2) const
+{
+	Rational s;
+	s.numerator = numerator*F2.numerator;
+	s.denominator = denominator*F2.denominator;
+	return s;
+}
+Rational Rational:: operator/ (Rational &F2) const
+{
+	Rational s;
+	s.numerator = numerator*F2.denominator;
+	s.denominator = denominator*F2.numerator;
+	cout << numerator << denominator;
+	return s;
+}
+Rational Rational::Reduce()
+{
+	int h = 1;
+	for (int i = 1; i <= numerator && denominator; i++)
+	{
+		if (numerator % i == 0 && denominator % i == 0)
+		{
+			h = i;
+		}
+	}
+	this->numerator = numerator / h;
+	this->denominator = denominator / h;
+	return *this;
+}
+bool Rational::operator==(const Rational& b)const
+{
+	return(numerator == b.numerator && denominator == b.denominator);
+}
+bool Rational::operator!=(const Rational& F2)const
+{
+	return(numerator != F2.numerator || denominator != F2.denominator);
+}
+bool Rational::operator<(const Rational& F2)const
+{
+	double n1,n2,d,f1,f2;
+	if (denominator != F2.denominator)
+	{
+		d = denominator*F2.denominator;
+		n1 = numerator*d;
+		n2 = F2.numerator*d;
+		f1=n1 / denominator;
+		f2=n2 / F2.denominator;
+		if (f1<f2)
+		{
+			return true;
+		}
+		else
+			return false;
+	}
+	else if (denominator == F2.denominator)
+	{
+		return(numerator<F2.numerator);
+	}
+};
+bool Rational::operator>=(const Rational& F2)const
+{
+
+	double n1, n2, d, f1, f2;
+	if (denominator != F2.denominator)
+	{
+		d = denominator*F2.denominator;
+		n1 = numerator*d;
+		n2 = F2.numerator*d;
+		f1 = n1 / denominator;
+		f2 = n2 / F2.denominator;
+		if (f1>=f2)
+		{
+			return true;
+		}
+		else
+			return false;
+	}
+	else if (denominator == F2.denominator)
+	{
+		return(numerator>=F2.numerator);
+	}
+
+}
+
+bool Rational::operator<=(const Rational& F2)const
+{
+
+	double n1, n2, d, f1, f2;
+	if (denominator != F2.denominator)
+	{
+		d = denominator*F2.denominator;
+		n1 = numerator*d;
+		n2 = F2.numerator*d;
+		f1 = n1 / denominator;
+		f2 = n2 / F2.denominator;
+		if (f1<=f2)
+		{
+			return true;
+		}
+		else
+			return false;
+	}
+	else if (denominator == F2.denominator)
+	{
+		return(numerator<=F2.numerator);
+	}
+}
+bool Rational::operator>(const Rational& F2)const
+{
+
+	double n1, n2, d, f1, f2;
+	if (denominator != F2.denominator)
+	{
+		d = denominator*F2.denominator;
+		n1 = numerator*d;
+		n2 = F2.numerator*d;
+		f1 = n1 / denominator;
+		f2 = n2 / F2.denominator;
+		if (f1>f2)
+		{
+			return true;
+		}
+		else
+			return false;
+	}
+	else if (denominator == F2.denominator)
+	{
+		return(numerator>F2.numerator);
+	}
+}
+Rational Rational::operator=(const Rational& F2)
+{
+	this->numerator = F2.numerator;
+	this->denominator = F2.denominator;
+	return *this;
+}
+ostream & operator<<(ostream& p, Rational& a)
+{
+	p << " " << a.numerator << "/" << a.denominator << endl;
+	return p;
+}
+istream & operator>>(istream& q, Rational& a)
+{
+	q >> a.numerator >> a.denominator;
+	return q;
+}
+Rational Rational:: operator++()
+{
+	if (denominator == 1)
+	{
+		++numerator;
+		++denominator;
+		return *this;
+	}
+}
+Rational Rational:: operator--()
+{
+	if (denominator == 1)
+	{
+		--numerator;
+		--denominator;
+	}
+	return *this;
+}
+Rational Rational:: operator++(int)
+{
+	Rational temp = *this;
+	if (denominator == 1)
+	{
+		++numerator;
+		++denominator;
+		return *this;
+	}
+	return temp;
+}
+Rational Rational:: operator--(int)
+{
+	Rational temp = *this;
+	if (denominator == 1)
+	{
+		--numerator;
+		--denominator;
+		return *this;
+	}
+	return temp;
+}
+void Rational::Print()
+{
+	
+	cout << numerator << "/ " << denominator << "\n\n";
+}
+
+int main()
+{
+	int a, b, c, d;
+	cout << "Enter numerator1\n";
+	cin >> a;
+	cout << "Enter Denominator1\n";
+	cin >> b;
+	cout << "Enter numerator2\n";
+	cin >> c;
+	cout << "Enter Denominator2\n";
+	cin >> d;
+	cout << "\n";
+	Rational F1(a, b);
+	Rational F2(c, d);
+	Rational z;
+	z = F1 + F2;
+	cout << "Addition after reduced form: ";
+	z=z.Reduce();
+	cout << z;
+	z = F1 - F2;
+	cout << "Subtraction after reduced form: ";
+	z=z.Reduce();
+	cout << z;
+	z = F1*F2;
+	cout << "Multiplication after reduced form: ";
+	z=z.Reduce();
+	cout << z;
+	z = F1 / F2;
+	cout << "Division after reduced form: ";
+	z=z.Reduce();
+	cout << z;
+	cout << endl;
+	if (F1 == F2)
+	{
+		cout << "F1 is equal to F2\n";
+
+	}
+	if (F1 != F2)
+	{
+		cout << "F1 is not equal to F2\n";
+
+	}
+	if (F1>F2)
+	{
+		cout << "F1 is greater than F2\n";
+
+	}
+	if (F1<F2)
+	{
+		cout << "F1 is less than F2\n";
+
+	}
+	if (F1<=F2)
+	{
+		cout << "F1 is less than or equal to F2\n";
+
+	}
+	if (F1 >= F2)
+	{
+		cout << "F1 is greater than or equal to F2\n";
+
+	}
+	cout << "Pre increment : " << endl;
+	++F1;
+	cout << F1;
+	cout << "Pre decrement : " << endl;
+	--F1;
+	cout << F1;
+	cout << "Post increment : " << endl;
+	F1++;
+	cout << F1;
+	cout << "Post decrement : " << endl;
+	F1--;
+	cout << F1 << endl;
+	cout << "Pre increment : " << endl;
+	++F2;
+	cout << F2;
+	cout << "Pre decrement : " << endl;
+	--F2;
+	cout << F2;
+	cout << "Post increment : " << endl;
+	F2++;
+	cout << F2;
+	cout << "Post decrement : " << endl;
+	F2--;
+	cout << F2;
+	
+	return 0;
+}
