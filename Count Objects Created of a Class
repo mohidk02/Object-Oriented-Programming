@@ -1,0 +1,25 @@
+#include <iostream>
+using namespace std;
+class base
+{
+    public:
+    static int x;
+    base ()
+    {
+        x++;
+    }
+    void print()
+    {
+        cout<<"Objects created: "<<x<<endl;;
+    }
+
+};
+int base ::  x=0;
+int main()
+{
+    base obj1;
+    base obj2;
+    base obj3;
+    obj2.print();
+    return 0;
+}
