@@ -1,0 +1,92 @@
+#include <iostream>
+#include <cstring>
+#include <sstream>
+using namespace std;
+struct item
+{
+	string name;
+	double price;
+};
+void getdata(item food[]);
+void showmenu(item food[]);
+void printbill(int d, double s);
+int main()
+{
+	item food[6];
+	getdata(food);
+	showmenu(food);
+	int c = 0;
+	double sum = 0;
+	int count = 0;
+	cout << "Enter your choice from the above menu\n (Press -1 to exit Menu) " << endl;
+    cout<<"Item Number: ";
+	cin >> c;
+	while (c != -1)
+	{
+		if (c == 1)
+		{
+			sum = sum + food[0].price;
+		}
+		else if (c == 2)
+		{
+			sum = sum + food[1].price;
+		}
+		else if (c == 3)
+		{
+			sum = sum + food[2].price;
+		}
+		else if (c == 4)
+		{
+			sum = sum + food[3].price;
+		}
+		else if (c == 5)
+		{
+			sum = sum + food[4].price;
+		}	
+        else if (c == 6)
+		{
+			sum = sum + food[5].price;
+		}	
+		else
+			cout << "Wrong choice, enter again or press -1 to exit " << endl;
+		count++;
+        cout<<"Item Number: ";
+		cin >> c;
+
+	}
+	printbill(count, sum);
+	return 0;
+}
+void getdata(item food[])
+{
+	food[0].name = "Bacon";
+	food[1].name = "Toast";
+	food[2].name = "Fruit";
+	food[3].name = "Cereal";
+	food[4].name = "Coffee";
+	food[5].name = "Peanut";
+	food[0].price = 2.45;
+	food[1].price = 1.99;
+	food[2].price = 2.49;
+	food[3].price = 0.69;
+	food[4].price = 0.50;
+	food[5].price = 0.80;
+	
+}
+void showmenu(item food[])
+{
+	cout << "For "<<  food[0].name << "  Enter - 1" << endl;
+	cout << "For " << food[1].name << "  Enter - 2" << endl;
+	cout << "For " << food[2].name << "  Enter - 3" << endl;
+	cout << "For " << food[3].name << " Enter - 4" << endl;
+	cout << "For " << food[4].name << " Enter - 5" << endl;
+	cout << "For " << food[5].name << " Enter - 6" << endl;
+}
+void printbill(int d, double s)
+{
+	cout << endl;
+	cout << "TOTAL ITEMS = " << d << endl;
+	double a = s + (0.05*s);
+	cout << "Total price = " << s << "$" << " (Without tax) " << endl;
+	cout << "With 5% tax your bill is = " << a << "$" << endl;
+}
