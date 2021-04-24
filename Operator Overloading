@@ -1,0 +1,124 @@
+#include <iostream>
+using namespace std;
+class complexno
+{
+private:
+	double real;
+	double imag;
+
+public:
+	complexno(double a = 0.0, double b = 0.0);
+	void setpara(double , double );
+	double getreal();
+	double getimag();
+	complexno operator+ (const complexno &) const;
+	complexno operator- (const complexno &) const;
+	complexno operator* (const complexno &) const;
+	complexno operator/ (complexno &) const;
+	bool operator== (const complexno &) const;
+	complexno operator = (const complexno &) ;
+	void print() const;
+	~complexno();
+};
+
+complexno::complexno(double a, double b)
+{
+	real = a;
+	imag = b;
+}
+void complexno::setpara(double a, double b)
+{
+	real = a;
+	imag = b;
+
+}
+complexno::~complexno()
+{
+}
+double complexno::getreal()
+{
+	return real;
+}
+double complexno::getimag()
+{
+	return imag;
+}
+complexno complexno::operator+ (const complexno & r2) const
+{
+	complexno temp;
+	temp.real = real + r2.real;
+	temp.imag = imag + r2.imag;
+	return temp;
+}
+complexno complexno::operator- (const complexno & r2) const
+{
+	complexno temp;
+	temp.real = real - r2.real;
+	temp.imag = imag - r2.imag;
+	return temp;
+}
+complexno complexno::operator* (const complexno & r2) const
+{
+	complexno temp;
+	temp.real = (real*r2.real) - (imag*r2.imag);
+	temp.imag = (real*r2.imag) + (imag*r2.real);
+	return temp;	
+	
+}
+complexno complexno::operator/ (complexno & r2) const
+{
+	complexno temp;
+	double den=0.0, t;
+		t = (real*r2.imag) - (imag*r2.real);
+		den = (r2.real*r2.real) + (r2.imag*r2.imag);
+		temp.real = ((real*r2.real) + (imag*r2.imag)) / (r2.real*r2.real+r2.imag*r2.imag);
+		temp.imag = t / den;
+		return temp;
+}
+bool complexno::operator== (const complexno &r2) const
+{
+	if (real == r2.real && imag == r2.imag)
+		return true;
+	else return false;
+}
+complexno complexno::operator = (const complexno &r2) 
+{
+	this->real= r2.real;
+	this->imag=r2.imag;
+	return *this;
+}
+void complexno::print() const
+{
+	if (imag > 0 || imag == 0)
+	{
+		cout << real << "+" << imag << "i" << endl;
+	}
+	else
+		cout << real << imag << "i" << endl;
+}
+
+
+
+int main()
+{
+	complexno n1,n2,n3;
+	n1.setpara(2,3);
+	n2.setpara(1,4);
+	n3=n1;
+	n3.print();
+	(n1+n2).print();
+	n3=n1*n2;
+	n3.print();
+	n3=n1-n2;
+	n3.print();
+	n3=n1/n2;
+	n3.print();
+	if(n1==n2)
+	cout<<"Both no have same real and imag part "<<endl;
+	else
+	cout<<"Unequal !!!"<<endl;
+	return 0;
+
+}
+
+
